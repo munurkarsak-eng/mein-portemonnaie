@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Check out app repository
         uses: actions/checkout@v4
@@ -22,11 +22,17 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Use preinstalled Android SDK
-        run: |
-          test -d "$ANDROID_HOME/platforms/android-35"
-          test -d "$ANDROID_HOME/build-tools/35.0.0"
-          printf 'sdk.dir=%s\n' "$ANDROID_HOME" > local.properties
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Keep the same debug signing key for rebuilds
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: mein-portemonnaie-debug-key-v1
+
+      - name: Install Android platform
+        run: sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -89,8 +95,7 @@ jobs:
           EOF
           cat > app/src/main/res/drawable/ic_launcher.xml <<'EOF'
           <vector xmlns:android="http://schemas.android.com/apk/res/android"
-              android:width="108dp" android:height="108dp"
-              android:viewportWidth="108" android:viewportHeight="108">
+              android:width="108dp" android:height="108dp" android:viewportWidth="108" android:viewportHeight="108">
               <path android:fillColor="#1D4E91" android:pathData="M0,0h108v108h-108z" />
               <path android:fillColor="#FFFFFF" android:pathData="M25,63h37v7h-37zM25,54h37v7h-37zM45,43h38v7h-38zM45,34h38v7h-38zM58,25h25v7h-25z" />
           </vector>
@@ -163,4 +168,3 @@ jobs:
           name: Mein-Portemonnaie-Android-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-          retention-days: 7

@@ -1,0 +1,20 @@
+MEIN PORTEMONNAIE – ANDROID-INSTALLATION
+
+Das Paket ist eine installierbare Web-App (PWA), keine APK-Datei.
+
+1. Den gesamten Ordner auf einen Webserver mit HTTPS hochladen.
+   Service Worker und App-Installation funktionieren nur über HTTPS
+   oder localhost.
+2. Vor dem Wechsel aus der bisherigen HTML-Datei: dort über ⇩ eine
+   Datensicherung erstellen.
+3. Die HTTPS-Adresse auf dem Android-Handy in Chrome öffnen.
+4. Chrome-Menü ⋮ öffnen und „App installieren“ oder „Zum Startbildschirm
+   hinzufügen“ auswählen.
+5. Die neue App öffnen, das Passwort einrichten und unter ⋮ die Sicherung
+   wiederherstellen. Dabei werden auch angehängte PDF-Dateien übernommen.
+
+Privat und Geschäftlich sind getrennte Ansichten. Die App lädt ihre Oberfläche
+für den Offline-Betrieb. Die PDF-Texterkennung benötigt beim ersten Laden eine
+Internetverbindung. Die Daten werden lokal im Browser gespeichert und nicht
+zwischen Handy und Tablet synchronisiert. Das App-Passwort sperrt den Zugriff,
+verschlüsselt die gespeicherten Daten aber nicht.
